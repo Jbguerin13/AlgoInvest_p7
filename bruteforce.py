@@ -4,15 +4,15 @@ import os, psutil
 
 start = time.time()
 
-# Calculate memory ressources using
+# Calculate cpu ressources using
 cpu_before = psutil.cpu_percent(interval=1, percpu=True)
-memory_before = psutil.virtual_memory().used
+print(f"CPU used before : {cpu_before} %")
 
 # Get RAM used
 ram_usage = psutil.virtual_memory().used
 ram_usage_go = ram_usage / (1024*1024*1024)
 
-print("RAM used :", ram_usage_go, "giga octets")
+print(f"RAM used before : {ram_usage_go}, giga octets")
 
 #Function to fetch max profit
 def max_profit(actions: list, max_budget: int) -> list:
@@ -35,7 +35,7 @@ def max_profit(actions: list, max_budget: int) -> list:
             best_combination = combination  
     return best_combination
 
-def convert_profit_to_percent(profit:str) -> str:
+def convert_profit_to_percent(profit: str) -> str:
     profit_converted = int(profit)/100
     return profit_converted
 
@@ -68,7 +68,9 @@ print("Profit total :", total_profit)
 print("depense:", sum(action['cost'] for action in best_combination))
 print(f"execution time : {round(end, 2) - round(start,2)} secondes")
 
+cpu_after = psutil.cpu_percent(interval=1, percpu=True)
 ram_usage_after = psutil.virtual_memory().used
 ram_usage_after_go = ram_usage_after / (1024*1024*1024)
 
-print("RAM used after running processus :", ram_usage_after_go, "giga octets")
+print(f"CPU used after running processus : {cpu_after} %")
+print(f"RAM used after running processus : {ram_usage_after_go}, giga octets")
